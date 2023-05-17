@@ -1,0 +1,25 @@
+Checklist for Prefinal
+1. Checklist from Midterm should be fully implemented
+2. Password Hashing
+        SHA256
+        BCrypt
+3. System Reports Printing
+        PDF or Printable
+4. User Profile with Image and should be updatable
+5. Database Normalization 1NF
+6. Proper implementation of database Keys (Designer Connection xampp)
+        Primary
+        Foriegn
+7. Improved System Design with proper closing and no form duplication
+
+public class PasswordEncoderExample {
+    public static void main(String[] args) {
+        String password = "myPassword123";
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String hashedPassword = encoder.encode(password);
+        System.out.println("Hashed Password: " + hashedPassword);
+        
+        boolean matches = encoder.matches(password, hashedPassword);
+        System.out.println("Password Matches: " + matches);
+    }
+}
