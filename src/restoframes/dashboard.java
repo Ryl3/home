@@ -49,6 +49,8 @@ public class dashboard extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         logout = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
+        reports = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
         header = new javax.swing.JPanel();
         minimize = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -187,6 +189,28 @@ public class dashboard extends javax.swing.JFrame {
         logout.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 70, 28));
 
         nav.add(logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, 70, 50));
+
+        reports.setBackground(new java.awt.Color(255, 173, 32));
+        reports.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        reports.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                reportsMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                reportsMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                reportsMouseExited(evt);
+            }
+        });
+        reports.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel10.setFont(new java.awt.Font("Trebuchet MS", 1, 15)); // NOI18N
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel10.setText("Reports");
+        reports.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 90, 20));
+
+        nav.add(reports, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 90, 40));
 
         getContentPane().add(nav, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 90, 440));
 
@@ -366,6 +390,18 @@ public class dashboard extends javax.swing.JFrame {
         rf.setVisible(true);
     }//GEN-LAST:event_logoutMouseClicked
 
+    private void reportsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reportsMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_reportsMouseClicked
+
+    private void reportsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reportsMouseEntered
+        reports.setBackground(enter);
+    }//GEN-LAST:event_reportsMouseEntered
+
+    private void reportsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reportsMouseExited
+        reports.setBackground(exit);
+    }//GEN-LAST:event_reportsMouseExited
+
     /**
      * @param args the command line arguments
      */
@@ -409,6 +445,7 @@ public class dashboard extends javax.swing.JFrame {
     public javax.swing.JDesktopPane dashboardpane;
     private javax.swing.JPanel header;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -420,6 +457,7 @@ public class dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel logout;
     private javax.swing.JPanel minimize;
     private javax.swing.JPanel nav;
+    private javax.swing.JPanel reports;
     private javax.swing.JPanel reserve;
     private javax.swing.JPanel user;
     // End of variables declaration//GEN-END:variables

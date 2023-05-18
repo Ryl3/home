@@ -3,26 +3,93 @@ package restoframes;
 import config.dbconnector;
 import config.passhash;
 import java.awt.Color;
+import java.awt.Image;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class registrationform extends javax.swing.JFrame {
 
     public registrationform() {
         initComponents();
     }
+    
+    public byte[] imageBytes;
+    String path;
+    String filename = null;
+    String imgPath = null;
+    byte[] person_image = null;
+    
+    public  ImageIcon ResizeImage(String ImagePath, byte[] pic) {
+    ImageIcon MyImage = null;
+        if(ImagePath !=null){
+            MyImage = new ImageIcon(ImagePath);
+        }else{
+            MyImage = new ImageIcon(pic);
+        }
+    Image img = MyImage.getImage();
+    Image newImg = img.getScaledInstance(imageDisplay.getWidth(), imageDisplay.getHeight(), Image.SCALE_SMOOTH);
+    ImageIcon image = new ImageIcon(newImg);
+    return image;
+}
+    
+    public void displayPicture(){
+        JFileChooser chooser = new JFileChooser();
+        chooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("*.Images", "jpg", "gif", "png");
+        chooser.addChoosableFileFilter(filter);
+        int result = chooser.showSaveDialog(null);
+
+        if (result == JFileChooser.APPROVE_OPTION){
+            File selectedFile = chooser.getSelectedFile();
+            path = selectedFile.getAbsolutePath();
+            imageDisplay.setIcon(ResizeImage(path,null));
+            imgPath = path;
+            File f = chooser.getSelectedFile();
+            filename = selectedFile.getAbsolutePath();
+        }else{
+            JOptionPane.showMessageDialog(null, "Canceled !");
+        }
+
+        try {
+            File image = new File(filename);
+            FileInputStream fis = new FileInputStream(image);
+            ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            byte[] buf = new byte[1024];
+
+            for (int readNum; (readNum=fis.read(buf)) !=-1;){
+                bos.write(buf,0,readNum);
+            }
+            person_image=bos.toByteArray();
+
+        }catch(Exception e){
+            System.out.println(e);
+        }
+
+    }
+    
+    
+   
+   
 
     Color enter = new Color(157, 1, 27);
     Color exit = new Color(136, 1, 17);
     Color orange = new Color(255, 105, 0);
 
-    int validateregister() {
+    int validation() {
         int result;
         if (regfname.getText().isEmpty() || reglname.getText().isEmpty() || regemail.getText().isEmpty()
                 || regusername.getText().isEmpty() || regpassword.getText().isEmpty()) {
@@ -52,7 +119,9 @@ public class registrationform extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         close = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
+        imageDisplay = new javax.swing.JLabel();
+        avatar = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
@@ -171,8 +240,22 @@ public class registrationform extends javax.swing.JFrame {
 
         jPanel2.add(close, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, -1, 40));
 
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/LogoMakr-4jxK6P.png"))); // NOI18N
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 150, -1, -1));
+        imageDisplay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/LogoMakr-4jxK6P.png"))); // NOI18N
+        jPanel2.add(imageDisplay, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 110, -1, -1));
+
+        avatar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                avatarMouseClicked(evt);
+            }
+        });
+        avatar.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Upload Avatar");
+        avatar.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 280, 30));
+
+        jPanel2.add(avatar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 330, 280, 70));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 0, 360, 500));
 
@@ -216,8 +299,10 @@ public class registrationform extends javax.swing.JFrame {
     }//GEN-LAST:event_signupMouseExited
 
     private void signupMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signupMouseClicked
+
+
         String hashedpass = null;
-        int check = validateregister(); 
+        int check = validation(); 
         if(check == 1){
             String pass;
             try{
@@ -232,10 +317,12 @@ public class registrationform extends javax.swing.JFrame {
         }catch(NoSuchAlgorithmException e){
             e.printStackTrace();
         }
+           
+           
         dbconnector dbc = new dbconnector();
-                dbc.insertdata("INSERT INTO tbl_user (user_fname, user_lname, user_email, user_username, password) "
+                dbc.insertdata("INSERT INTO tbl_user (user_fname, user_lname, user_email, user_username, password, u_image) "
                 + "VALUES ('"+regfname.getText()+"', '"+reglname.getText()+"','"+regemail.getText()+"',"
-                        + "'"+regusername.getText()+"','"+hashedpass+"')");
+                        + "'"+regusername.getText()+"','"+hashedpass+"','"+imageDisplay+"')");
                 
         JOptionPane.showMessageDialog(null, "Successfully Registered",
        "MESSAGE!", JOptionPane.INFORMATION_MESSAGE); 
@@ -287,6 +374,10 @@ public class registrationform extends javax.swing.JFrame {
         jPanel3.setBackground(exit);
     }//GEN-LAST:event_jPanel3MouseExited
 
+    private void avatarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_avatarMouseClicked
+        displayPicture();
+    }//GEN-LAST:event_avatarMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -323,12 +414,14 @@ public class registrationform extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel avatar;
     private javax.swing.JPanel close;
+    public javax.swing.JLabel imageDisplay;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
