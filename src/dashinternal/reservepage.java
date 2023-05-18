@@ -34,10 +34,10 @@ public class reservepage extends javax.swing.JInternalFrame {
     public void displaydata() {
         try {
             dbconnector dbc = new dbconnector();
-            ResultSet rs = dbc.getdata("SELECT `res_id`, tbl_user.us_id, tbl_customer.c_id, tbl_user.us_fname, "
-                    + "tbl_user.us_lname, tbl_user.us_email, tbl_customer.c_contact, tbl_customer.c_address "
-                    + "FROM `tbl_reservation` LEFT JOIN tbl_user ON tbl_reservation.us_id = tbl_user.us_id "
-                    + "LEFT JOIN tbl_customer ON tbl_reservation.c_id = tbl_customer.c_id");
+            ResultSet rs = dbc.getdata("SELECT res_id, tbl_user.user_id, tbl_customer.cus_id, tbl_user.user_fname, "
+                    + "tbl_user.user_lname, tbl_user.user_email, tbl_customer.cus_address "
+                    + "FROM tbl_reserve LEFT JOIN tbl_user ON tbl_reserve.us_id = tbl_user.user_id "
+                    + "LEFT JOIN tbl_customer ON tbl_reserve.cus_id = tbl_customer.cus_id");
             reservetable.setModel(DbUtils.resultSetToTableModel(rs));
             rs.close();
         } catch (SQLException e) {

@@ -1,36 +1,39 @@
-
 package restoframes;
 
 import config.dbconnector;
+import config.passhash;
 import java.awt.Color;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-
 public class registrationform extends javax.swing.JFrame {
 
-    
     public registrationform() {
         initComponents();
     }
-    
-        Color enter  = new Color(157,1,27);
-        Color exit = new Color(136,1,17);
-        Color orange = new Color(255,105,0);
-      
-        int validateregister(){
-            int result;
-            if(regfname.getText().isEmpty() || reglname.getText().isEmpty() || regemail.getText().isEmpty() || 
-                    regusername.getText().isEmpty() || regpassword.getText().isEmpty() ){
-                
-                result = 0;
-            }else{
-                result = 1;
-            }
-                return result;
+
+    Color enter = new Color(157, 1, 27);
+    Color exit = new Color(136, 1, 17);
+    Color orange = new Color(255, 105, 0);
+
+    int validateregister() {
+        int result;
+        if (regfname.getText().isEmpty() || reglname.getText().isEmpty() || regemail.getText().isEmpty()
+                || regusername.getText().isEmpty() || regpassword.getText().isEmpty()) {
+
+            result = 0;
+        } else {
+            result = 1;
         }
-        
-    
+        return result;
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -213,24 +216,34 @@ public class registrationform extends javax.swing.JFrame {
     }//GEN-LAST:event_signupMouseExited
 
     private void signupMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signupMouseClicked
-        
+        String hashedpass = null;
         int check = validateregister(); 
         if(check == 1){
-        dbconnector dbc = new dbconnector();
-          int result = dbc.insertdata("INSERT INTO tbl_user (us_fname, us_lname, us_email, us_username, us_password)"
-                  + " VALUES ('"+regfname.getText()+"', '"+reglname.getText()+"', '"+regemail.getText()+"', '"+regusername.getText()+"',"
-                          + " '"+regpassword.getText()+"')");                                                                              
-               if(result==1){
-                  JOptionPane.showMessageDialog(null, "Successfully Registered!");
-                  loginform lg = new loginform();
-                  this.dispose();
-                  lg.setVisible(true);
-           }else{
-                  JOptionPane.showMessageDialog(null, "Successfully Failed! Tarungag type dong!");
-               }
-        }else{
-            JOptionPane.showMessageDialog(null, "Required Inputs!");
+            String pass;
+            try{
+             MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(regpassword.getText().getBytes());
+            byte[] byteData = md.digest();
+            StringBuffer sb = new StringBuffer();
+                for (int i = 0; i < byteData.length; i++) {
+                  sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+                   }
+                hashedpass = sb.toString();
+        }catch(NoSuchAlgorithmException e){
+            e.printStackTrace();
         }
+        dbconnector dbc = new dbconnector();
+                dbc.insertdata("INSERT INTO tbl_user (user_fname, user_lname, user_email, user_username, password) "
+                + "VALUES ('"+regfname.getText()+"', '"+reglname.getText()+"','"+regemail.getText()+"',"
+                        + "'"+regusername.getText()+"','"+hashedpass+"')");
+                
+        JOptionPane.showMessageDialog(null, "Successfully Registered",
+       "MESSAGE!", JOptionPane.INFORMATION_MESSAGE); 
+        loginform L = new loginform();
+        L.setVisible(true);
+        this.dispose();
+        
+              }
     }//GEN-LAST:event_signupMouseClicked
 
     private void minimizeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_minimizeMouseClicked
@@ -247,7 +260,7 @@ public class registrationform extends javax.swing.JFrame {
 
     private void closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeMouseClicked
         int x = JOptionPane.showConfirmDialog(null, "Confirm Exit");
-        if(x== JOptionPane.YES_OPTION){
+        if (x == JOptionPane.YES_OPTION) {
             System.exit(0);
         }
     }//GEN-LAST:event_closeMouseClicked
@@ -323,7 +336,7 @@ public class registrationform extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel minimize;
     private javax.swing.JTextField regemail;
-    private javax.swing.JTextField regfname;
+    public javax.swing.JTextField regfname;
     private javax.swing.JTextField reglname;
     private javax.swing.JPasswordField regpassword;
     private javax.swing.JTextField regusername;

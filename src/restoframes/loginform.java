@@ -1,12 +1,17 @@
-
+    
 package restoframes;
 
 import config.dbconnector;
 import java.awt.Color;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -202,27 +207,32 @@ public class loginform extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loginMouseClicked
-        
-        String user = email.getText();
-        String pass = password.getText();
-        if (email.getText().isEmpty() || password.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(null, "Please Input!");
-        } else {
-            try {
-                con = DriverManager.getConnection("jdbc:mysql://localhost:3306/restotracker", "root", "");
-                dbconnector dbc = new dbconnector();
-                ResultSet rs = dbc.getdata("SELECT * FROM tbl_user WHERE us_email= '" + email.getText() + "'AND us_password='" + password.getText() + "'");
-                if (rs.next()) {
-                    JOptionPane.showMessageDialog(rootPane, "Successfully Login!!");
-
-                    dashboard dash = new dashboard();
-                    this.dispose();
-                    dash.setVisible(true);
-                } else {
-                    JOptionPane.showMessageDialog(rootPane, "Incorrect User or Password!!");
+        try{
+             con = DriverManager.getConnection("jdbc:mysql://localhost:3306/restotracker", "root", "");
+             dbconnector dbc = new dbconnector();
+             String hashedpass = null;
+             
+            MessageDigest md = MessageDigest.getInstance("SHA-256");
+            md.update(password.getText().getBytes());
+            byte[] byteData = md.digest();
+            StringBuffer sb = new StringBuffer();
+                for (int i = 0; i < byteData.length; i++) {
+                  sb.append(Integer.toString((byteData[i] & 0xff) + 0x100, 16).substring(1));
+                   }
+                hashedpass = sb.toString();
+                ResultSet rs = dbc.getdata("SELECT * FROM tbl_user Where user_email = '" +email.getText()+ " '  AND password = '" + hashedpass + "'");
+                if (rs.next()){
+                            JOptionPane.showMessageDialog(null," Logged In Succesfully",
+                             "System Message!", JOptionPane.ERROR_MESSAGE);
+                         this.dispose();
+                         dashboard dash =new dashboard();
+                         dash.setVisible(true);
+                }else{
+                        JOptionPane.showMessageDialog(null," Username Or Password Incorrect",
+                        "User Error!", JOptionPane.ERROR_MESSAGE);
                 }
-            } catch (Exception e) {
-            }
+        }catch(SQLException | NoSuchAlgorithmException ex){
+            Logger.getLogger(loginform.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_loginMouseClicked
 

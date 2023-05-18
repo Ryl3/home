@@ -229,7 +229,7 @@ public class reservationInfo extends javax.swing.JFrame {
         int check = validateregister(); 
         if(check == 1){
             dbconnector dbc = new dbconnector();
-           int result = dbc.insertdata("INSERT INTO tbl_reservation(res_id, us_id, c_id) VALUES ('"+resid.getText()+"', '"+userid.getText()+"', '"+cusid.getText()+"')");
+           int result = dbc.insertdata("INSERT INTO tbl_reserve(res_id, us_id, c_id) VALUES ('"+resid.getText()+"', '"+userid.getText()+"', '"+cusid.getText()+"')");
            if(result==1){
                   JOptionPane.showMessageDialog(null, "Successfully Saved!");
                close();
@@ -242,7 +242,7 @@ public class reservationInfo extends javax.swing.JFrame {
         
        }else if(action.equals("Edit")){
            dbconnector dbc = new dbconnector();
-            dbc.updatedata("UPDATE tbl_reservation SET WHERE res_id = '"+resid.getText()+"', us_id = '"+userid.getText()+"',"
+            dbc.updatedata("UPDATE tbl_reserve SET WHERE res_id = '"+resid.getText()+"', us_id = '"+userid.getText()+"',"
                                             + " c_id = '"+cusid.getText()+"',   ");
                close();
             }else{

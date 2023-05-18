@@ -1,11 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package dashinternal;
 
 import java.awt.Color;
+import java.awt.Image;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 
 /**
@@ -19,20 +22,40 @@ public class accountpage extends javax.swing.JInternalFrame {
      */
     public accountpage() {
         initComponents();
-        
-        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0,0,0,0));
-        BasicInternalFrameUI bif = (BasicInternalFrameUI)this.getUI();
+
+        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        BasicInternalFrameUI bif = (BasicInternalFrameUI) this.getUI();
         bif.setNorthPane(null);
     }
 
-        Color enter  = new Color(136,8,8);
-        Color exit = new Color(74,4,4);
-        Color plate = new Color(100,4,4);
+    public  ImageIcon ResizeImage(String ImagePath, byte[] pic) {
+    ImageIcon MyImage = null;
+        if(ImagePath !=null){
+            MyImage = new ImageIcon(ImagePath);
+        }else{
+            MyImage = new ImageIcon(pic);
+        }
+    Image img = MyImage.getImage();
+    Image newImg = img.getScaledInstance(ppshow.getWidth(), ppshow.getHeight(), Image.SCALE_SMOOTH);
+    ImageIcon image = new ImageIcon(newImg);
+    return image;
+}
+    
+    public byte[] imageBytes;
+    String path;
+    String filename = null;
+    String imgPath = null;
+    byte[] person_image = null;
+
+    Color enter = new Color(136, 8, 8);
+    Color exit = new Color(74, 4, 4);
+    Color plate = new Color(100, 4, 4);
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        changepp = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -44,90 +67,143 @@ public class accountpage extends javax.swing.JInternalFrame {
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
+        ppshow = new javax.swing.JLabel();
+        cahngepp = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
 
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.setBackground(new java.awt.Color(157, 1, 27));
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        changepp.setBackground(new java.awt.Color(157, 1, 27));
+        changepp.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 3));
+        changepp.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel8.setFont(new java.awt.Font("Trebuchet MS", 1, 24)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(240, 240, 240));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("Account Settings");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
+        changepp.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, -1, -1));
 
         jLabel10.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(240, 240, 240));
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setText("Name: ");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, -1));
+        changepp.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, -1));
 
         jLabel12.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(240, 240, 240));
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setText("Email: ");
-        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
+        changepp.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, -1, -1));
 
         jLabel11.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(240, 240, 240));
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("Postion: ");
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, -1, -1));
+        changepp.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, -1, -1));
 
         jLabel13.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(240, 240, 240));
         jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel13.setText("Address: ");
-        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, -1));
+        changepp.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, -1, -1));
 
         jLabel9.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(240, 240, 240));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("Contact: ");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, -1, -1));
+        changepp.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 260, -1, -1));
 
         jLabel14.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(240, 240, 240));
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel14.setText("Ryle Aaron Delicano");
-        jPanel1.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, -1));
+        changepp.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, -1, -1));
 
         jLabel15.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(240, 240, 240));
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel15.setText("rylearonundead@gmail.com");
-        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, -1, -1));
+        changepp.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, -1, -1));
 
         jLabel16.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(240, 240, 240));
         jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel16.setText("Administrator");
-        jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, -1, -1));
+        changepp.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 180, -1, -1));
 
         jLabel17.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(240, 240, 240));
         jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel17.setText("Vito Minglanilla, Cebu");
-        jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, -1, -1));
+        changepp.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, -1, -1));
 
         jLabel18.setFont(new java.awt.Font("Trebuchet MS", 1, 18)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(240, 240, 240));
         jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel18.setText("09123654585");
-        jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, -1, -1));
+        changepp.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, -1, -1));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Duck Twerk GIFs _ Tenor.gif"))); // NOI18N
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 70, -1, -1));
+        ppshow.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Duck Twerk GIFs _ Tenor.gif"))); // NOI18N
+        changepp.add(ppshow, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 30, -1, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 410));
+        cahngepp.setBackground(new java.awt.Color(255, 204, 51));
+        cahngepp.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cahngeppMouseClicked(evt);
+            }
+        });
+        cahngepp.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setText("Change Avatar");
+        cahngepp.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(13, 5, -1, 20));
+
+        changepp.add(cahngepp, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 270, 110, 30));
+
+        getContentPane().add(changepp, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 410));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cahngeppMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cahngeppMouseClicked
+       JFileChooser chooser = new JFileChooser();
+        chooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("*.Images", "jpg", "gif", "png","GIF");
+        chooser.addChoosableFileFilter(filter);
+        int result = chooser.showSaveDialog(null);
+        
+        if (result == JFileChooser.APPROVE_OPTION){
+            File selectedFile = chooser.getSelectedFile();
+            path = selectedFile.getAbsolutePath();
+            ppshow.setIcon(ResizeImage(path,null));
+            imgPath = path;
+            File f = chooser.getSelectedFile();
+            filename = selectedFile.getAbsolutePath();
+        }else{
+        JOptionPane.showMessageDialog(null, "Canceled !");
+        }
+        
+      
+        try {
+                File image = new File(filename);
+                FileInputStream fis = new FileInputStream(image);
+                ByteArrayOutputStream bos = new ByteArrayOutputStream();
+                byte[] buf = new byte[1024];
+                
+                for (int readNum; (readNum=fis.read(buf)) !=-1;){
+                 bos.write(buf,0,readNum);
+                }
+                person_image=bos.toByteArray();
+                
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_cahngeppMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel cahngepp;
+    private javax.swing.JPanel changepp;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -137,9 +213,8 @@ public class accountpage extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel ppshow;
     // End of variables declaration//GEN-END:variables
 }
