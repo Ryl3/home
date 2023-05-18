@@ -34,10 +34,8 @@ public class reservepage extends javax.swing.JInternalFrame {
     public void displaydata() {
         try {
             dbconnector dbc = new dbconnector();
-            ResultSet rs = dbc.getdata("SELECT res_id, tbl_user.user_id, tbl_customer.cus_id, tbl_user.user_fname, "
-                    + "tbl_user.user_lname, tbl_user.user_email, tbl_customer.cus_address "
-                    + "FROM tbl_reserve LEFT JOIN tbl_user ON tbl_reserve.us_id = tbl_user.user_id "
-                    + "LEFT JOIN tbl_customer ON tbl_reserve.cus_id = tbl_customer.cus_id");
+            ResultSet rs = dbc.getdata("SELECT res_id, tbl_reserve.customer_id, tbl_reserve.res_status, tbl_reserve.res_userstatus "
+                    + "FROM `tbl_reserve` LEFT JOIN tbl_customer ON tbl_reserve.customer_id = tbl_customer.cus_id");
             reservetable.setModel(DbUtils.resultSetToTableModel(rs));
             rs.close();
         } catch (SQLException e) {
@@ -269,11 +267,9 @@ public class reservepage extends javax.swing.JInternalFrame {
             TableModel model = reservetable.getModel();
             reservationInfo ri = new reservationInfo();
             ri.resid.setText("" + model.getValueAt(rowindex, 0));
-            ri.userid.setText("" + model.getValueAt(rowindex, 1));
-            ri.cusid.setText("" + model.getValueAt(rowindex, 2));
-            ri.status.setText("" + model.getValueAt(rowindex, 3));
-            ri.type.setSelectedItem("" + model.getValueAt(rowindex, 4));
-            ri.desc.setText("" + model.getValueAt(rowindex, 5));
+            ri.cusid.setText("" + model.getValueAt(rowindex, 1));
+            ri.status.setText("" + model.getValueAt(rowindex, 2));
+            ri.type.setSelectedItem("" + model.getValueAt(rowindex, 3));
             ri.setVisible(true);
             ri.action = "Edit";
             ri.Azzaz.setText("Update");

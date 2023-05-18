@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 14, 2023 at 04:05 AM
+-- Generation Time: May 18, 2023 at 11:16 AM
 -- Server version: 10.4.27-MariaDB
--- PHP Version: 8.2.0
+-- PHP Version: 8.0.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,8 +18,19 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `maindb`
+-- Database: `restotracker`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_avatar`
+--
+
+CREATE TABLE `tbl_avatar` (
+  `name` int(20) NOT NULL,
+  `picture` longblob NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -32,6 +43,7 @@ CREATE TABLE `tbl_customer` (
   `cus_fname` varchar(20) NOT NULL,
   `cus_lname` varchar(20) NOT NULL,
   `cus_gender` varchar(20) NOT NULL,
+  `cus_status` varchar(30) NOT NULL,
   `cus_address` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -39,9 +51,9 @@ CREATE TABLE `tbl_customer` (
 -- Dumping data for table `tbl_customer`
 --
 
-INSERT INTO `tbl_customer` (`cus_id`, `cus_fname`, `cus_lname`, `cus_gender`, `cus_address`) VALUES
-(1, 'ryle', 'aaron', 'Male', 'Afghanistan'),
-(3, 'ROWAN', 'DAAA', 'Male', 'Czech Republic');
+INSERT INTO `tbl_customer` (`cus_id`, `cus_fname`, `cus_lname`, `cus_gender`, `cus_status`, `cus_address`) VALUES
+(4, 'po', 'po', 'Male', 'Single', 'po'),
+(5, 'kit', 'kit', 'Female', 'In relationship', 'kit');
 
 -- --------------------------------------------------------
 
@@ -51,9 +63,7 @@ INSERT INTO `tbl_customer` (`cus_id`, `cus_fname`, `cus_lname`, `cus_gender`, `c
 
 CREATE TABLE `tbl_reserve` (
   `res_id` int(10) NOT NULL,
-  `user_id` int(10) NOT NULL,
   `customer_id` int(10) NOT NULL,
-  `res_contact` int(20) NOT NULL,
   `res_status` varchar(20) NOT NULL,
   `res_userstatus` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -62,8 +72,8 @@ CREATE TABLE `tbl_reserve` (
 -- Dumping data for table `tbl_reserve`
 --
 
-INSERT INTO `tbl_reserve` (`res_id`, `user_id`, `customer_id`, `res_contact`, `res_status`, `res_userstatus`) VALUES
-(1, 2, 1, 4564335, 'sdfer', 'sdfewdf');
+INSERT INTO `tbl_reserve` (`res_id`, `customer_id`, `res_status`, `res_userstatus`) VALUES
+(2, 5, 'ha', 'ha');
 
 -- --------------------------------------------------------
 
@@ -77,21 +87,25 @@ CREATE TABLE `tbl_user` (
   `user_lname` varchar(20) NOT NULL,
   `user_email` varchar(20) NOT NULL,
   `user_username` varchar(20) NOT NULL,
-  `user_password` varchar(50) NOT NULL,
-  `user_status` varchar(15) NOT NULL
+  `password` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tbl_user`
 --
 
-INSERT INTO `tbl_user` (`user_id`, `user_fname`, `user_lname`, `user_email`, `user_username`, `user_password`, `user_status`) VALUES
-(2, 'sad', 'sad', 'sad', 'sad', 'sad', 'Pending'),
-(4, 'rowandaa', 'atay', 'pidte.com', 'sadwe', 'sdwrd', 'Pending');
+INSERT INTO `tbl_user` (`user_id`, `user_fname`, `user_lname`, `user_email`, `user_username`, `password`) VALUES
+(5, 'po', 'po', 'po', 'po', '6199aecf23aba7e87b2dafb8b4915260da85e3cf53568197b7e451982392fb8e');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `tbl_avatar`
+--
+ALTER TABLE `tbl_avatar`
+  ADD PRIMARY KEY (`name`);
 
 --
 -- Indexes for table `tbl_customer`
@@ -104,7 +118,6 @@ ALTER TABLE `tbl_customer`
 --
 ALTER TABLE `tbl_reserve`
   ADD PRIMARY KEY (`res_id`),
-  ADD KEY `user_id` (`user_id`),
   ADD KEY `customer_id` (`customer_id`);
 
 --
@@ -118,22 +131,28 @@ ALTER TABLE `tbl_user`
 --
 
 --
+-- AUTO_INCREMENT for table `tbl_avatar`
+--
+ALTER TABLE `tbl_avatar`
+  MODIFY `name` int(20) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `tbl_customer`
 --
 ALTER TABLE `tbl_customer`
-  MODIFY `cus_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `cus_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tbl_reserve`
 --
 ALTER TABLE `tbl_reserve`
-  MODIFY `res_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `res_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `tbl_user`
 --
 ALTER TABLE `tbl_user`
-  MODIFY `user_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `user_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Constraints for dumped tables
@@ -143,8 +162,7 @@ ALTER TABLE `tbl_user`
 -- Constraints for table `tbl_reserve`
 --
 ALTER TABLE `tbl_reserve`
-  ADD CONSTRAINT `customer_id` FOREIGN KEY (`customer_id`) REFERENCES `tbl_customer` (`cus_id`),
-  ADD CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `tbl_user` (`user_id`);
+  ADD CONSTRAINT `customer_id` FOREIGN KEY (`customer_id`) REFERENCES `tbl_customer` (`cus_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

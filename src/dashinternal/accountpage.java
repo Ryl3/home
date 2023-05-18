@@ -1,10 +1,15 @@
 package dashinternal;
 
+import config.dbconnector;
 import java.awt.Color;
 import java.awt.Image;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -70,6 +75,10 @@ public class accountpage extends javax.swing.JInternalFrame {
         ppshow = new javax.swing.JLabel();
         cahngepp = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        savepp = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        loadpp = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
 
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -144,7 +153,7 @@ public class accountpage extends javax.swing.JInternalFrame {
         changepp.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, -1, -1));
 
         ppshow.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Duck Twerk GIFs _ Tenor.gif"))); // NOI18N
-        changepp.add(ppshow, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 30, -1, -1));
+        changepp.add(ppshow, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 60, -1, -1));
 
         cahngepp.setBackground(new java.awt.Color(255, 204, 51));
         cahngepp.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -155,9 +164,35 @@ public class accountpage extends javax.swing.JInternalFrame {
         cahngepp.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setText("Change Avatar");
-        cahngepp.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(13, 5, -1, 20));
+        cahngepp.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, -1, 30));
 
-        changepp.add(cahngepp, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 270, 110, 30));
+        changepp.add(cahngepp, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 60, 110, 30));
+
+        savepp.setBackground(new java.awt.Color(255, 204, 51));
+        savepp.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                saveppMouseClicked(evt);
+            }
+        });
+        savepp.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel2.setText("Save");
+        savepp.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 0, -1, 30));
+
+        changepp.add(savepp, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 110, 110, 30));
+
+        loadpp.setBackground(new java.awt.Color(255, 204, 51));
+        loadpp.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                loadppMouseClicked(evt);
+            }
+        });
+        loadpp.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel3.setText("Load");
+        loadpp.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 0, -1, 30));
+
+        changepp.add(loadpp, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 160, 110, 30));
 
         getContentPane().add(changepp, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 750, 410));
 
@@ -165,9 +200,9 @@ public class accountpage extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void cahngeppMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cahngeppMouseClicked
-       JFileChooser chooser = new JFileChooser();
+      JFileChooser chooser = new JFileChooser();
         chooser.setCurrentDirectory(new File(System.getProperty("user.home")));
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("*.Images", "jpg", "gif", "png","GIF");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("*.Images", "jpg", "gif", "png");
         chooser.addChoosableFileFilter(filter);
         int result = chooser.showSaveDialog(null);
         
@@ -197,7 +232,37 @@ public class accountpage extends javax.swing.JInternalFrame {
         }catch(Exception e){
             System.out.println(e);
         }
+
     }//GEN-LAST:event_cahngeppMouseClicked
+
+    private void saveppMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_saveppMouseClicked
+        try{
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/restotracker", "root", "");
+            String sql = "INSERT INTO tbl_avatar (name, picture) VALUES (?,?)";
+            PreparedStatement pst = con.prepareStatement(sql);
+            pst.setString(1, filename);
+            pst.setBytes(2,person_image);
+            pst.execute();
+            JOptionPane.showMessageDialog(null, "Successfully Updated!");
+            
+        }catch(Exception e){
+            System.out.println(e);
+        }
+    }//GEN-LAST:event_saveppMouseClicked
+
+    private void loadppMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_loadppMouseClicked
+        try{
+            dbconnector dbc = new dbconnector();
+            ResultSet rs = dbc.getdata("SELECT * FROM picture WHERE name = 1");
+            if(rs.next()){
+                ppshow.setIcon(ResizeImage(null, rs.getBytes("picture")));
+                
+            }
+            
+}catch(Exception e){
+
+}
+    }//GEN-LAST:event_loadppMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -213,8 +278,12 @@ public class accountpage extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel loadpp;
     private javax.swing.JLabel ppshow;
+    private javax.swing.JPanel savepp;
     // End of variables declaration//GEN-END:variables
 }

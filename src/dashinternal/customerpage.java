@@ -270,10 +270,9 @@ public class customerpage extends javax.swing.JInternalFrame {
                 ci.cusid.setText(""+model.getValueAt(rowindex, 0));
                 ci.fname.setText(""+model.getValueAt(rowindex, 1));
                 ci.lname.setText(""+model.getValueAt(rowindex, 2));
-                ci.contact.setText(""+model.getValueAt(rowindex, 3).toString());
-                ci.gender.setSelectedItem(""+model.getValueAt(rowindex, 4).toString());
-                ci.status.setSelectedItem(""+model.getValueAt(rowindex, 5).toString());
-                ci.address.setText(""+model.getValueAt(rowindex, 6));
+                ci.gender.setSelectedItem(""+model.getValueAt(rowindex, 3).toString());
+                ci.status.setSelectedItem(""+model.getValueAt(rowindex, 4).toString());
+                ci.address.setText(""+model.getValueAt(rowindex, 5));
                 ci.setVisible(true);
                 ci.action = "Edit";
                 ci.Azzaz.setText("Update");

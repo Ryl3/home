@@ -35,8 +35,7 @@ public class customerInfo extends javax.swing.JFrame {
 
     int validateregister() {
         int result;
-        if (fname.getText().isEmpty() || lname.getText().isEmpty() || contact.getText().isEmpty()
-                || gender.getSelectedItem().equals(null) || status.getSelectedItem().equals(null)
+        if (fname.getText().isEmpty() || lname.getText().isEmpty() || gender.getSelectedItem().equals(null) || status.getSelectedItem().equals(null)
                 || address.getText().isEmpty()) {
             JOptionPane.showMessageDialog(null, "Required Inputs!");
             result = 0;
@@ -65,7 +64,6 @@ public class customerInfo extends javax.swing.JFrame {
         address = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         cusid = new javax.swing.JTextField();
@@ -76,7 +74,6 @@ public class customerInfo extends javax.swing.JFrame {
         Azzaz = new javax.swing.JLabel();
         gender = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
-        contact = new javax.swing.JTextField();
         status = new javax.swing.JComboBox<>();
         close = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -97,27 +94,23 @@ public class customerInfo extends javax.swing.JFrame {
 
         address.setFont(new java.awt.Font("Verdana", 1, 15)); // NOI18N
         address.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel1.add(address, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 300, 270, 30));
+        jPanel1.add(address, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 260, 270, 30));
 
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 15)); // NOI18N
         jLabel1.setText("Gender");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, -1, 30));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, -1, 30));
 
         jLabel3.setFont(new java.awt.Font("Verdana", 1, 15)); // NOI18N
         jLabel3.setText("Customer ID");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, -1, 30));
 
-        jLabel4.setFont(new java.awt.Font("Verdana", 1, 15)); // NOI18N
-        jLabel4.setText("Contact");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, -1, 30));
-
         jLabel7.setFont(new java.awt.Font("Verdana", 1, 15)); // NOI18N
         jLabel7.setText("Customer Status");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, -1, 30));
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, -1, 30));
 
         jLabel8.setFont(new java.awt.Font("Verdana", 1, 15)); // NOI18N
         jLabel8.setText("Address");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, 30));
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, -1, 30));
 
         cusid.setFont(new java.awt.Font("Verdana", 1, 15)); // NOI18N
         cusid.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -161,20 +154,16 @@ public class customerInfo extends javax.swing.JFrame {
         gender.setFont(new java.awt.Font("Verdana", 1, 15)); // NOI18N
         gender.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Male", "Female", "Gay ", "Lesbian", "Degamo" }));
         gender.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel1.add(gender, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 220, 270, 30));
+        jPanel1.add(gender, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 180, 270, 30));
 
         jLabel5.setFont(new java.awt.Font("Verdana", 1, 15)); // NOI18N
         jLabel5.setText("Last Name");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, 30));
 
-        contact.setFont(new java.awt.Font("Verdana", 1, 15)); // NOI18N
-        contact.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel1.add(contact, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 180, 270, 30));
-
         status.setFont(new java.awt.Font("Verdana", 1, 15)); // NOI18N
         status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Single", "In relationship", "Alive", "Dead", " " }));
         status.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel1.add(status, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 260, 270, 30));
+        jPanel1.add(status, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 220, 270, 30));
 
         close.setBackground(new java.awt.Color(255, 102, 102));
         close.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -235,8 +224,8 @@ public class customerInfo extends javax.swing.JFrame {
             if (check == 1) {
 
                 dbconnector dbc = new dbconnector();
-                int result = dbc.insertdata("INSERT INTO tbl_customer(c_fname, c_lname,c_contact, c_gender,c_status, c_address) "
-                        + "VALUES ('" + fname.getText() + "', '" + lname.getText() + "', '" + contact.getText() + "', '" + gender.getSelectedItem() + "',"
+                int result = dbc.insertdata("INSERT INTO tbl_customer(cus_fname, cus_lname, cus_gender,cus_status, cus_address) "
+                        + "VALUES ('" + fname.getText() + "', '" + lname.getText() + "', '" + gender.getSelectedItem() + "',"
                         + " '" + status.getSelectedItem() + "', '" + address.getText() + "' )");
                 if (result == 1) {
                     JOptionPane.showMessageDialog(null, "Successfully Saved!");
@@ -251,12 +240,10 @@ public class customerInfo extends javax.swing.JFrame {
         } else if (action.equals("Edit")) {
             dbconnector dbc = new dbconnector();
             System.out.println("");
-            dbc.updatedata("UPDATE tbl_customer SET c_fname = '" + fname.getText() + "',"
-                    + " c_lname = '" + lname.getText() + "',"
-                    + " c_contact = '" + contact.getText() + "',"
-                    + " c_gender = '" + gender.getSelectedItem() + "',"
-                    + " c_status = '" + status.getSelectedItem() + "',"
-                    + " c_address = '"+address.getText()+"' WHERE c_id = '" + cusid.getText() + "'");
+            dbc.updatedata("UPDATE tbl_customer SET cus_fname = '" + fname.getText() + "',"
+                    + " cus_lname = '" + lname.getText() + "',"
+                    + " cus_status = '" + status.getSelectedItem() + "',"
+                    + " cus_address = '"+address.getText()+"' WHERE cus_id = '" + cusid.getText() + "'");
                 close();
         } else {
             JOptionPane.showMessageDialog(null, "No Actions Performed!");
@@ -344,7 +331,6 @@ public class customerInfo extends javax.swing.JFrame {
     public javax.swing.JLabel Azzaz;
     public javax.swing.JTextField address;
     private javax.swing.JPanel close;
-    public javax.swing.JTextField contact;
     public javax.swing.JTextField cusid;
     public javax.swing.JPanel done;
     public javax.swing.JTextField fname;
@@ -353,7 +339,6 @@ public class customerInfo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;

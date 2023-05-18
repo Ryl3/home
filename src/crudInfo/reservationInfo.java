@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package crudInfo;
 
 import config.dbconnector;
@@ -35,7 +30,7 @@ public class reservationInfo extends javax.swing.JFrame {
     
     int validateregister(){
             int result;
-            if(status.getText().isEmpty() || type.getSelectedItem().equals(null) || desc.getText().isEmpty() || payrate.getText().isEmpty() ){
+            if(status.getText().isEmpty() || type.getSelectedItem().equals(null) ){
                 JOptionPane.showMessageDialog(null, "Required Inputs!");
                 result = 0;
             }else{
@@ -61,26 +56,20 @@ public class reservationInfo extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        payrate = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         resid = new javax.swing.JTextField();
-        userid = new javax.swing.JTextField();
         cusid = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
         add = new javax.swing.JPanel();
         Azzaz = new javax.swing.JLabel();
         type = new javax.swing.JComboBox<>();
-        desc = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
         status = new javax.swing.JTextField();
         close = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         minimize = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -94,13 +83,9 @@ public class reservationInfo extends javax.swing.JFrame {
         jLabel2.setText("Reservation Information");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
-        payrate.setFont(new java.awt.Font("Verdana", 1, 15)); // NOI18N
-        payrate.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel1.add(payrate, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 300, 270, 30));
-
         jLabel1.setFont(new java.awt.Font("Verdana", 1, 15)); // NOI18N
-        jLabel1.setText("Type");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, -1, 30));
+        jLabel1.setText("User Status");
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, -1, 30));
 
         jLabel3.setFont(new java.awt.Font("Verdana", 1, 15)); // NOI18N
         jLabel3.setText("Reservation ID");
@@ -108,31 +93,19 @@ public class reservationInfo extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Verdana", 1, 15)); // NOI18N
         jLabel4.setText("Status");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, -1, 30));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, 30));
 
-        jLabel7.setFont(new java.awt.Font("Verdana", 1, 15)); // NOI18N
-        jLabel7.setText("Description");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 260, -1, 30));
-
-        jLabel8.setFont(new java.awt.Font("Verdana", 1, 15)); // NOI18N
-        jLabel8.setText("Payrate");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 300, -1, 30));
-
+        resid.setEditable(false);
         resid.setFont(new java.awt.Font("Verdana", 1, 15)); // NOI18N
         resid.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        resid.setEnabled(false);
         jPanel1.add(resid, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 60, 270, 30));
 
-        userid.setFont(new java.awt.Font("Verdana", 1, 15)); // NOI18N
-        userid.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel1.add(userid, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 270, 30));
-
+        cusid.setEditable(false);
         cusid.setFont(new java.awt.Font("Verdana", 1, 15)); // NOI18N
         cusid.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel1.add(cusid, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 140, 270, 30));
-
-        jLabel9.setFont(new java.awt.Font("Verdana", 1, 15)); // NOI18N
-        jLabel9.setText("User ID");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, -1, 30));
+        cusid.setEnabled(false);
+        jPanel1.add(cusid, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 100, 270, 30));
 
         add.setBackground(new java.awt.Color(255, 102, 102));
         add.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -154,24 +127,16 @@ public class reservationInfo extends javax.swing.JFrame {
         Azzaz.setText("Azzaz");
         add.add(Azzaz, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 140, 30));
 
-        jPanel1.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 280, 140, 50));
+        jPanel1.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 160, 140, 50));
 
         type.setFont(new java.awt.Font("Verdana", 1, 15)); // NOI18N
         type.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Alone", "Couple", "Family", "Social Gathering" }));
         type.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel1.add(type, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 220, 270, 30));
-
-        desc.setFont(new java.awt.Font("Verdana", 1, 15)); // NOI18N
-        desc.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel1.add(desc, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 260, 270, 30));
-
-        jLabel5.setFont(new java.awt.Font("Verdana", 1, 15)); // NOI18N
-        jLabel5.setText("Customer ID");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 140, -1, 30));
+        jPanel1.add(type, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, 270, 30));
 
         status.setFont(new java.awt.Font("Verdana", 1, 15)); // NOI18N
         status.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel1.add(status, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 180, 270, 30));
+        jPanel1.add(status, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 140, 270, 30));
 
         close.setBackground(new java.awt.Color(255, 102, 102));
         close.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -217,6 +182,10 @@ public class reservationInfo extends javax.swing.JFrame {
 
         jPanel1.add(minimize, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 10, -1, 30));
 
+        jLabel9.setFont(new java.awt.Font("Verdana", 1, 15)); // NOI18N
+        jLabel9.setText("Customer ID");
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, -1, 30));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 620, 350));
 
         pack();
@@ -229,7 +198,8 @@ public class reservationInfo extends javax.swing.JFrame {
         int check = validateregister(); 
         if(check == 1){
             dbconnector dbc = new dbconnector();
-           int result = dbc.insertdata("INSERT INTO tbl_reserve(res_id, us_id, c_id) VALUES ('"+resid.getText()+"', '"+userid.getText()+"', '"+cusid.getText()+"')");
+           int result = dbc.insertdata("INSERT INTO tbl_reserve(res_id, customer_id, res_status, res_userstatus) "
+                   + "VALUES ('"+resid.getText()+"', '"+cusid.getText()+"', '" +status.getText()+"', '"+type.getSelectedItem()+"')");
            if(result==1){
                   JOptionPane.showMessageDialog(null, "Successfully Saved!");
                close();
@@ -242,8 +212,8 @@ public class reservationInfo extends javax.swing.JFrame {
         
        }else if(action.equals("Edit")){
            dbconnector dbc = new dbconnector();
-            dbc.updatedata("UPDATE tbl_reserve SET WHERE res_id = '"+resid.getText()+"', us_id = '"+userid.getText()+"',"
-                                            + " c_id = '"+cusid.getText()+"',   ");
+            dbc.updatedata("UPDATE tbl_reserve SET WHERE res_id = '"+resid.getText()+"', customer_id = '"+cusid.getText()+"',"
+                    + " res_status = '"+status.getText()+"', res_userstatus = '"+type.getSelectedItem()+"' ");
                close();
             }else{
                   JOptionPane.showMessageDialog(null, "No Actions Performed!");
@@ -260,9 +230,10 @@ public class reservationInfo extends javax.swing.JFrame {
     }//GEN-LAST:event_addMouseExited
 
     private void closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeMouseClicked
-        reservepage cp = new reservepage();
-        this.dispose();
-        cp.setVisible(true);
+            close();
+//        reservepage cp = new reservepage();
+//        this.dispose();
+//        cp.setVisible(true);
     }//GEN-LAST:event_closeMouseClicked
 
     private void closeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeMouseEntered
@@ -328,23 +299,17 @@ public class reservationInfo extends javax.swing.JFrame {
     private javax.swing.JPanel add;
     private javax.swing.JPanel close;
     public javax.swing.JTextField cusid;
-    public javax.swing.JTextField desc;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel minimize;
-    public javax.swing.JTextField payrate;
     public javax.swing.JTextField resid;
     public javax.swing.JTextField status;
     public javax.swing.JComboBox<String> type;
-    public javax.swing.JTextField userid;
     // End of variables declaration//GEN-END:variables
 }

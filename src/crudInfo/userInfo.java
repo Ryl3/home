@@ -264,9 +264,10 @@ public class userInfo extends javax.swing.JFrame {
     }//GEN-LAST:event_minimizeMouseExited
 
     private void closeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeMouseClicked
-        userpage cp = new userpage();
-        this.dispose();
-        cp.setVisible(true);
+        close();
+//        userpage cp = new userpage();
+//        this.dispose();
+//        cp.setVisible(true);
     }//GEN-LAST:event_closeMouseClicked
 
     private void closeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_closeMouseEntered
